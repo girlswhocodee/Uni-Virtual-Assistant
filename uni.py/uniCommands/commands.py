@@ -7,7 +7,21 @@ import warnings
 import calendar
 import random
 import wikipedia
+import pyaudio
+import webbrowser
+#import pyttsx3
+#from pyttsx3 import voice
 
+
+#engine = pyttsx3.init('pyaudio')
+#voices = engine.getProperty('voices') #getting details of the current voice
+#engine.setProperty('voice', voice[0].id)
+
+#def speak(audio):
+    #pass
+
+pyaudio.get_portaudio_version()
+p = pyaudio.PyAudio() 
 
 def recognizeAudio():
     rec = sr.Recognizer()
@@ -24,9 +38,9 @@ def recognizeAudio():
         print('You said: ' + data)
 
     except sr.UnknownValueError:
-        print('Google Speech Recognition could not detect this audio')
+        print('Could not detect this audio')
     except sr.RequestError as e:
-        print('Request results from Google Speech Recognition service error' + e)
+        print('Could not request results' + e)
 
     return data
 
@@ -76,3 +90,14 @@ def getDate():
     return 'Today is '+weekday+' '+ calendarMonths[monthNumber - 1] + ' the '+ ordinalNumbers[dayNumber - 1]+ '. '
 
 #print (getDate())
+
+def greetingType():
+    hour = int(datetime.datetime.now().hour)
+    if hour>=0 and hour<12:
+        return('Good Morning!')
+    elif hour>=12 and hour<18:
+        return('Good Afternoon!')   
+    else:
+        return('Good Evening!')
+
+#print (greetingType())
