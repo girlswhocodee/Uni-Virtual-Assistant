@@ -20,23 +20,26 @@ import webbrowser
 #def speak(audio):
     #pass
 
-pyaudio.get_portaudio_version()
-p = pyaudio.PyAudio() 
+#pyaudio.get_portaudio_version()
+#p = pyaudio.PyAudio() 
 
+#Record audio and return it as a string
 def recognizeAudio():
     rec = sr.Recognizer()
 
+    #open microphone and record
     with sr.Microphone() as source:
-        rec.adjust_for_ambient_noise(source,duration=1)
+        rec.adjust_for_ambient_noise(source,duration=1) #adjust audio to account for ambient noise
         print('Hi, how can I help you?')
-        audio = rec.listen(source, timeout=10)
+        audio = rec.listen(source, timeout=10) #timeout if no speech is detected after 10 seconds
 
-
+    #Use Google Speech Recognition
     data = ''
     try:
         data = rec.recognize_google(audio)
         print('You said: ' + data)
 
+    #check for unknown errors
     except sr.UnknownValueError:
         print('Could not detect this audio')
     except sr.RequestError as e:
@@ -46,13 +49,19 @@ def recognizeAudio():
 
 #recognizeAudio()
 
+#function to get Uni response
 def uniResponse(text):
 
     print(text)
 
+    #convert text to speech
     myObject = gTTS(text=text, lang='en', slow=False)
+
+    #saves the converted audio to a file
     myObject.save('uni_response.mp3')
-    os.system('open uni_response.mp3')
+
+    #plays converted file
+    os.system('open uni_response.mp3') #use "start" for windows operating system
 
 #text = 'This is just a test'
 #uniResponse(text)
@@ -71,6 +80,7 @@ def wakeCommand(text):
     #executed if wake phrase isn't found in the text
     return False
 
+#function to get current date
 def getDate():
     now = datetime.datetime.now()
     todaysDate = datetime.datetime.today()
@@ -91,6 +101,7 @@ def getDate():
 
 #print (getDate())
 
+#Function to make Uni greet according to the time
 def greetingType():
     hour = int(datetime.datetime.now().hour)
     if hour>=0 and hour<12:
