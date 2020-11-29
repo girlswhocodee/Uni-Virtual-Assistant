@@ -30,11 +30,11 @@ def recognizeAudio(audio):
 def takeCommand():
     rec = sr.Recognizer()
 
+    #open microphone and record
     with sr.Microphone() as source:
-        rec.adjust_for_ambient_noise(source,duration=1)
+        rec.adjust_for_ambient_noise(source,duration=1) #adjust audio to account for ambient noise
         print('Hi, how can I help you?')
-        audio = rec.listen(source, timeout=10)
-
+        audio = rec.listen(source, timeout=10) #timeout if no speech is detected after 10 seconds
 
     #data = ''
     try:
@@ -53,7 +53,10 @@ def uniResponse(text):
 
     print(text)
 
+    #convert text to speech
     myObject = gTTS(text=text, lang='en', slow=False)
+
+    #saves the converted audio to a file
     myObject.save('uni_response.mp3')
     os.system('start uni_response.mp3')
     #for mac operating system    os.system('open uni_response.mp3')
@@ -95,6 +98,7 @@ def getDate():
 
 #print (getDate())
 
+#Function to make Uni greet according to the time
 def greetingType():
     hour = int(datetime.datetime.now().hour)
     if hour>=0 and hour<12:

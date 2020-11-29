@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../../usr/local/lib/python3.8/site-packages/speech_recognition"
+		},
+		{
+			"path": "../../../../usr/local/lib/python3.8/site-packages/SpeechRecognition-3.8.1.dist-info"
+		}
+	],
+	"settings": {}
+}
