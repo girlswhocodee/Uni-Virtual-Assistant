@@ -7,23 +7,27 @@ import warnings
 import calendar
 import random
 import wikipedia
-import pyaudio
 import webbrowser
-#import pyttsx3
-#from pyttsx3 import voice
+import pyttsx3 
+from pyttsx3 import voice
+import pyttsx3.voice
+import time
+
+engine = pyttsx3.init('sapi5')
 
 
-#engine = pyttsx3.init('pyaudio')
-#voices = engine.getProperty('voices') #getting details of the current voice
-#engine.setProperty('voice', voice[0].id)
+def recognizeAudio(audio):
 
-#def speak(audio):
-    #pass
+    en_voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-GB_HAZEL_11.0"
 
-pyaudio.get_portaudio_version()
-p = pyaudio.PyAudio() 
+    # Use female English voice
+    engine.setProperty('voice', en_voice_id)
+    engine.say(audio)
+    engine.runAndWait()
+    engine.stop()
 
-def recognizeAudio():
+
+def takeCommand():
     rec = sr.Recognizer()
 
     with sr.Microphone() as source:
@@ -32,31 +36,31 @@ def recognizeAudio():
         audio = rec.listen(source, timeout=10)
 
 
-    data = ''
+    #data = ''
     try:
-        data = rec.recognize_google(audio)
+        data = rec.recognize_google(audio, language='en-in')
         print('You said: ' + data)
 
-    except sr.UnknownValueError:
-        print('Could not detect this audio')
-    except sr.RequestError as e:
-        print('Could not request results' + e)
-
+    except Exception as e:
+        recognizeAudio('Could you say that again please...')
+        return 'None'
+        
     return data
 
 #recognizeAudio()
-
+'''
 def uniResponse(text):
 
     print(text)
 
     myObject = gTTS(text=text, lang='en', slow=False)
     myObject.save('uni_response.mp3')
-    os.system('open uni_response.mp3')
-
+    os.system('start uni_response.mp3')
+    #for mac operating system    os.system('open uni_response.mp3')
+'''
 #text = 'This is just a test'
 #uniResponse(text)
-
+'''
 #function for wake phrases
 def wakeCommand(text):
     WAKE_PHRASES = ['hey Uni', 'okay Uni']
@@ -70,7 +74,7 @@ def wakeCommand(text):
             return True
     #executed if wake phrase isn't found in the text
     return False
-
+'''
 def getDate():
     now = datetime.datetime.now()
     todaysDate = datetime.datetime.today()
@@ -94,10 +98,92 @@ def getDate():
 def greetingType():
     hour = int(datetime.datetime.now().hour)
     if hour>=0 and hour<12:
-        return('Good Morning!')
+        recognizeAudio('Good Morning!')
     elif hour>=12 and hour<18:
-        return('Good Afternoon!')   
+        recognizeAudio('Good Afternoon!')   
     else:
-        return('Good Evening!')
+        recognizeAudio('Good Evening!')
+
+    recognizeAudio("How can I help you?")
 
 #print (greetingType())
+
+def setReminder():
+    recognizeAudio("What shall I remind you about?")
+    text = str(input())
+    print("In how many minutes?")
+    local_time = float(input())
+    local_time = local_time * 60
+    time.sleep(local_time)
+    print(text)
+
+
+'''
+#Function to return a random greeting response 
+def greeting(text):
+    # Greeting Inputs
+    GREETING_INPUTS = ['hi', 'hey', 'hola', 'greetings', 'wassup', 'hello']
+     # Greeting Response back to the user
+    GREETING_RESPONSES = ['howdy', 'whats good', 'hello', 'hey there']
+     # If the users input is a greeting, then return random response
+    for word in text.split():
+        if word.lower() in GREETING_INPUTS:
+            return random.choice(GREETING_RESPONSES) + '.'
+    # If no greeting was detected then return an empty string
+    return ''
+'''
+'''
+def getPerson(text):
+    wordList = text.split()
+    for i in range (0, len(wordList)):
+        if i + 3 <= len(wordList) - 1 and wordList[i].lower() == 'who' and wordList[i+1].lower() == 'is':
+            return wordList[i+2] + ' ' + wordList[i+3] 
+'''
+'''
+import sys
+import string
+from time import sleep
+from pyttsx3 import voice, voice, voice
+
+
+#sa = sys.argv
+#lsa = len(sys.argv)
+#if lsa != 2:
+ #   print("Usage: [ python ] alarm_clock.py duration_in_minutes")
+ #   print ("Example: [ python ] alarm_clock.py 10")
+  #  print ("Use a value of 0 minutes for testing the alarm immediately.")
+   # print ("Beeps a few times after the duration is over.")
+    #print ("Press Ctrl-C to terminate the alarm clock early.")
+    #sys.exit(1)
+
+try:
+    minutes = int(sa[1])
+except ValueError:
+    print("Invalid numeric value (%s) for minutes" % sa[1])
+    print("Should be an integer >= 0")
+    sys.exit(1)
+
+if minutes < 0:
+    print("Invalid value for minutes, should be >= 0")
+    sys.exit(1)
+
+seconds = minutes * 60
+
+if minutes == 1:
+    unit_word = " minute"
+else:
+    unit_word = " minutes"
+
+try:
+    if minutes > 0:
+        print("Sleeping for " + str(minutes) + unit_word)
+        sleep(seconds)
+    print("Wake up")
+    for i in range(5):
+        print(chr(7)),
+        sleep(1)
+except KeyboardInterrupt:
+    print("Interrupted by user")
+    sys.exit(1)
+
+'''
