@@ -1,14 +1,21 @@
-from commands import getDate, greetingType, recognizeAudio, setReminder, takeCommand
-#getPerson, greeting, greetingType, recognizeAudio, takeCommand, uniResponse, wakeCommand
+from commands import getCurrentDate, greetingType, recognizeAudio, takeCommand, wakeCommand
 import wikipedia
 import datetime
 import pyttsx3 
+import commands
+from time import sleep
+from datetime import date
+import time
+import pyjokes
+import webbrowser
 
 
 
 if __name__ =="__main__":
+    #this is the first method that is executed before taking any commands
     greetingType()
-    #text = recognizeAudio("how can I help you?")
+    
+
     while True:
         data = takeCommand().lower()
 
@@ -21,19 +28,59 @@ if __name__ =="__main__":
             recognizeAudio(results)
 
         elif 'date' in data:
-            getDate = datetime.datetime.today().strftime('%b, %d %Y')
-            print(getDate)
-            recognizeAudio(getDate)
+            getCurrentDate = datetime.datetime.today().strftime('%b, %d %Y')
+            print(getCurrentDate)
+            recognizeAudio(getCurrentDate)
 
         elif 'time' in data:
             getTime = datetime.datetime.now().strftime('%I:%M' '%p')
             print(getTime)
             recognizeAudio(getTime)
 
-        elif 'reminder' in data:
-            remindMe = setReminder
-            print(remindMe)
-            recognizeAudio(remindMe)
+        elif "write" in data:
+            recognizeAudio("What should i write Mariam?")
+            note = takeCommand()
+            file = open('uni.txt', 'w')
+            recognizeAudio("Should i include the date and time")
+            snfm = takeCommand()
+            if 'yes' in snfm or 'sure' in snfm:
+                strTime = datetime.datetime.now().strftime("%I:%M")
+                file.write(strTime)
+                file.write(" :- ")
+                file.write(note)
+            else:
+                file.write(note)
+         
+        elif "show note" in data:
+            recognizeAudio("Showing Notes")
+            file = open("uni.txt", "r") 
+            print(file.read())
+            recognizeAudio(file.read(6))
+
+        elif 'joke' in data:
+            recognizeAudio(pyjokes.get_joke())
+
+        elif "where is" in data:
+            data = data.replace('where is', '')
+            location = data
+            recognizeAudio('Let me look that up for you')
+            recognizeAudio(location)
+            webbrowser.open("https://www.google.nl/maps/place/" + location + '')
+
+        elif 'youtube' in data:
+            recognizeAudio('Opening Youtube\n')
+            webbrowser.open('youtube.com')
+
+        elif 'blackboard' in data:
+            recognizeAudio('Opening Blackboard\n')
+            webbrowser.open('https://blackboard.umbc.edu/')
+ 
+    
+
+    
+           
+
+        
 
 
 

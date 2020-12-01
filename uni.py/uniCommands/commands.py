@@ -1,7 +1,6 @@
 # Import the libraries
 import speech_recognition as sr
 import os
-from gtts import gTTS
 import datetime
 import warnings
 import calendar
@@ -12,6 +11,12 @@ import pyttsx3
 from pyttsx3 import voice
 import pyttsx3.voice
 import time
+import shutil
+
+
+
+#SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
+
 
 engine = pyttsx3.init('sapi5')
 
@@ -33,7 +38,7 @@ def takeCommand():
     #open microphone and record
     with sr.Microphone() as source:
         rec.adjust_for_ambient_noise(source,duration=1) #adjust audio to account for ambient noise
-        print('Hi, how can I help you?')
+        print('Hi, how can I help you Mariam?')
         audio = rec.listen(source, timeout=10) #timeout if no speech is detected after 10 seconds
 
     #data = ''
@@ -47,23 +52,7 @@ def takeCommand():
         
     return data
 
-#recognizeAudio()
-'''
-def uniResponse(text):
 
-    print(text)
-
-    #convert text to speech
-    myObject = gTTS(text=text, lang='en', slow=False)
-
-    #saves the converted audio to a file
-    myObject.save('uni_response.mp3')
-    os.system('start uni_response.mp3')
-    #for mac operating system    os.system('open uni_response.mp3')
-'''
-#text = 'This is just a test'
-#uniResponse(text)
-'''
 #function for wake phrases
 def wakeCommand(text):
     WAKE_PHRASES = ['hey Uni', 'okay Uni']
@@ -77,8 +66,11 @@ def wakeCommand(text):
             return True
     #executed if wake phrase isn't found in the text
     return False
-'''
-def getDate():
+
+
+def getCurrentDate():
+
+    text = text.lower()
     now = datetime.datetime.now()
     todaysDate = datetime.datetime.today()
     weekday = calendar.day_name[todaysDate.weekday()] 
@@ -86,8 +78,14 @@ def getDate():
     dayNumber = now.day
 
     #a list of months 
-    calendarMonths = ['January', 'February', 'March', 'April', 'May', 
-    'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    calendarMonths = ['january', 'february', 'march', 'april', 'may', 
+    'june', 'july', 'august', 'september', 'october', 'november', 'december']
+
+    #list of days
+    calendarDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+
+    #day extensions 
+    dayExtensions = ['rd', 'th', 'st']
 
     #a list of ordinal numbers
     ordinalNumbers = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th','10th', '11th', '12th', 
@@ -96,7 +94,6 @@ def getDate():
 
     return 'Today is '+weekday+' '+ calendarMonths[monthNumber - 1] + ' the '+ ordinalNumbers[dayNumber - 1]+ '. '
 
-#print (getDate())
 
 #Function to make Uni greet according to the time
 def greetingType():
@@ -108,86 +105,192 @@ def greetingType():
     else:
         recognizeAudio('Good Evening!')
 
-    recognizeAudio("How can I help you?")
-
-#print (greetingType())
-
-def setReminder():
-    recognizeAudio("What shall I remind you about?")
-    text = str(input())
-    print("In how many minutes?")
-    local_time = float(input())
-    local_time = local_time * 60
-    time.sleep(local_time)
-    print(text)
+    recognizeAudio("How can I help you Mariam?")
 
 
-'''
-#Function to return a random greeting response 
-def greeting(text):
-    # Greeting Inputs
-    GREETING_INPUTS = ['hi', 'hey', 'hola', 'greetings', 'wassup', 'hello']
-     # Greeting Response back to the user
-    GREETING_RESPONSES = ['howdy', 'whats good', 'hello', 'hey there']
-     # If the users input is a greeting, then return random response
-    for word in text.split():
-        if word.lower() in GREETING_INPUTS:
-            return random.choice(GREETING_RESPONSES) + '.'
-    # If no greeting was detected then return an empty string
-    return ''
-'''
-'''
+
 def getPerson(text):
     wordList = text.split()
     for i in range (0, len(wordList)):
         if i + 3 <= len(wordList) - 1 and wordList[i].lower() == 'who' and wordList[i+1].lower() == 'is':
             return wordList[i+2] + ' ' + wordList[i+3] 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 '''
+def takeABreak():
+    pwd = os.getcwd()
+    name = getpass.getuser()
+    message = 'Hello'
+    notify2.init(message)
+    n = notify2.Notification(message+'Take a break')
+    task="recognizeAudio "+"'"+message +"I think you need to take a break"+"'" +" -s 150"
+    os.system(task)
+    n.setUrgency(notify2.URGENCY_NORMAL)
+    n.setTimeout(100)
+    n.show()
 '''
-import sys
-import string
-from time import sleep
-from pyttsx3 import voice, voice, voice
+
+'''
+def authenticateGoogleCalendar():
+    """Shows basic usage of the Google Calendar API.
+    Prints the start and name of the next 10 events on the user's calendar.
+    """
+    creds = None
+    # The file token.pickle stores the user's access and refresh tokens, and is
+    # created automatically when the authorization flow completes for the first
+    # time.
+    if os.path.exists('token.pickle'):
+        with open('token.pickle', 'rb') as token:
+            creds = pickle.load(token)
+    # If there are no (valid) credentials available, let the user log in.
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                'credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open('token.pickle', 'wb') as token:
+            pickle.dump(creds, token)
+
+    service = build('calendar', 'v3', credentials=creds)
+
+    return service 
+
+def getEvents(day, service):
+    # Call the Calendar API
+    date = datetime.datetime.combine(day, datetime.datetime.min.time())
+    endDate = datetime.datetime.combine(day, datetime.datetime.max.time())
+    utc = pytz.UTC
+    date = date.astimezone(utc)
+    endDate = endDate.astimezone(utc)
+
+    print('Getting the upcoming {n} events')
+    events_result = service.events().list(calendarId='primary', timeMin=date.isoformat, timeMax=date.isoformat, singleEvents=True,
+    orderBy='startTime').execute()
+    events = events_result.get('items', [])
+
+    if not events:
+        recognizeAudio('No upcoming events found.')
+    else:
+        recognizeAudio(f'You have {len(events)} events on this day.')
+    for event in events:
+        start = event['start'].get('dateTime', event['start'].get('date'))
+        recognizeAudio(start, event['summary'])
+        startTime = str(start.split('T')[1].split('-')[0])
+        if int(startTime.split(':')[0]) < 12:
+            startTime = startTime + 'am'
+        else:
+            startTime = str(int(startTime.split(':')[0]) -12)
+            startTime = startTime + 'pm'
+
+        takeCommand(event['summary'] + 'at' + startTime)
 
 
-#sa = sys.argv
-#lsa = len(sys.argv)
-#if lsa != 2:
- #   print("Usage: [ python ] alarm_clock.py duration_in_minutes")
- #   print ("Example: [ python ] alarm_clock.py 10")
-  #  print ("Use a value of 0 minutes for testing the alarm immediately.")
-   # print ("Beeps a few times after the duration is over.")
-    #print ("Press Ctrl-C to terminate the alarm clock early.")
-    #sys.exit(1)
+def getDate(text):
 
-try:
-    minutes = int(sa[1])
-except ValueError:
-    print("Invalid numeric value (%s) for minutes" % sa[1])
-    print("Should be an integer >= 0")
-    sys.exit(1)
+    text = text.lower()
+    now = datetime.datetime.now()
+    todaysDate = datetime.date.today()
+    weekday = calendar.day_name[todaysDate.weekday()] 
+    monthNumber = now.month
+    dayNumber = now.day
 
-if minutes < 0:
-    print("Invalid value for minutes, should be >= 0")
-    sys.exit(1)
+    #a list of months 
+    calendarMonths = ['january', 'february', 'march', 'april', 'may', 
+    'june', 'july', 'august', 'september', 'october', 'november', 'december']
 
-seconds = minutes * 60
+    #list of days
+    calendarDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
-if minutes == 1:
-    unit_word = " minute"
-else:
-    unit_word = " minutes"
+    #day extensions 
+    dayExtensions = ['rd', 'th', 'st']
 
-try:
-    if minutes > 0:
-        print("Sleeping for " + str(minutes) + unit_word)
-        sleep(seconds)
-    print("Wake up")
-    for i in range(5):
-        print(chr(7)),
-        sleep(1)
-except KeyboardInterrupt:
-    print("Interrupted by user")
-    sys.exit(1)
+    #a list of ordinal numbers
+    #ordinalNumbers = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th','10th', '11th', '12th', 
+    #'13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st', '22nd', '23rd', '24th', '25th'
+    #'26th', '27th', '28th','29th', '30th', '31st']
 
+    if text.count('todaysDate') > 0:
+        return todaysDate
+
+    day = -1
+    dayOfTheWeek = -1
+    month = -1
+    year = todaysDate.year 
+
+    for word in text.split():
+        if word in calendarMonths:
+            month = calendarMonths.index(word) + 1
+        elif word in calendarDays:
+            dayOfTheWeek = calendarDays.index(word)
+        elif word.isdigit():
+            day = int(word)
+        else:
+            for ext in dayExtensions:
+                found = word.find(ext)
+                if found > 0:
+                    try:
+                        day = int(word[:found])
+                    except:
+                        pass
+
+    if month < todaysDate.month and month != -1:
+        year = year + 1
+
+    if day < todaysDate.day and month == -1 and day != -1:
+        month = month + 1
+
+    if month == -1 and day == -1 and dayOfTheWeek != -1:
+        currentDayOfWeek = todaysDate.weekday()
+        dif = dayOfTheWeek - currentDayOfWeek 
+
+        if dif < 0:
+            dif += 7
+            if text.count('next') >= 1:
+                dif += 7
+
+        return todaysDate + datetime.timedelta(dif)
+    if month == -1 or day == -1:
+        return None
+    return datetime.date(month=month, day=day, year=year)
+    
+
+service = authenticateGoogleCalendar()
+text = takeCommand()
+calendarStrs = ['what do i have', 'do i have plans', 'am i busy']
+for phrase in calendarStrs:
+    if phrase in text.lower():
+        date = getDate(text)
+        if date:
+            getEvents(date, service)
+        else:
+            recognizeAudio('Please try again')
 '''
