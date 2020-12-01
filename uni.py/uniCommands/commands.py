@@ -15,18 +15,19 @@ import time
 
 engine = pyttsx3.init('sapi5')
 
-
+# anything written in the function will be converted into speech
 def recognizeAudio(audio):
 
+    #specific voice id for chosen voice
     en_voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-GB_HAZEL_11.0"
 
     # Use female English voice
     engine.setProperty('voice', en_voice_id)
     engine.say(audio)
-    engine.runAndWait()
+    engine.runAndWait() #Without this command, speech will not be audible to us.
     engine.stop()
 
-
+#activates microphone, and then converts the audio to text
 def takeCommand():
     rec = sr.Recognizer()
 
@@ -41,6 +42,7 @@ def takeCommand():
         data = rec.recognize_google(audio, language='en-in')
         print('You said: ' + data)
 
+    #conditionals to cover errors that may occur if there’s too much background noise/didn't capture voice
     except Exception as e:
         recognizeAudio('Could you say that again please...')
         return 'None'
@@ -62,7 +64,7 @@ def wakeCommand(text):
     #executed if wake phrase isn't found in the text
     return False
 
-
+#function gives the current date
 def getCurrentDate():
 
     text = text.lower()
