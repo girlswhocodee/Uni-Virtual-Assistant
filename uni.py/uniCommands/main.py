@@ -15,7 +15,6 @@ if __name__ =="__main__":
     #this is the first method that is executed before taking any commands
     greetingType()
     
-
     while True:
         #converting user data into lowercase
         data = takeCommand().lower()
@@ -84,6 +83,10 @@ if __name__ =="__main__":
         elif 'blackboard' in data:
             recognizeAudio('Opening Blackboard\n')
             webbrowser.open('https://blackboard.umbc.edu/')
+
+        #if who are you is found, Uni will introduce herself
+        elif "who are you" in data:
+            recognizeAudio("My name is Uni and I am your virtual assistant")
  
     
 
