@@ -60,7 +60,7 @@ if __name__ =="__main__":
             recognizeAudio("Showing Notes")
             file = open("uni.txt", "r") 
             print(file.read())
-            recognizeAudio(file.read(6))
+            recognizeAudio(file.read(10))
 
         #if joke is found in data, Uni will tell jokes
         elif 'joke' in data:
