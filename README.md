@@ -24,6 +24,26 @@ In order to run this program succesfully on your computer, there are a few packa
          - pip3 install 
          - pip3 install pyaudio or pipwin install pyaudio (Windows) - this may be needed in the case that you are receiving an error
          
-   2) After succesfully downloading the 
+    - After succesfully downloading the necessary libaries and packages, you are now ready to use Uni as your virtual assistant. 
+   
+   2) Open your IDE and import the Uni-Virtual-Assistant code from Github or any other location. 
+   
+   3) After the code has been imported you may now run the program
+   
+   4) Uni will greet you and will ask you "how can I help you?"
+   
+   5) From here you may ask Uni to execute a command. The functionalities are as follows:
+         - Tells the current time 
+         - Tells the current date 
+         - Opens YouTube 
+         - Opens BlackBoard 
+         - Searches wikipedia for someone and gives a short summary 
+         - Searches google for a specific location
+         - Tells jokes 
+         - Takes notes 
+         - Introduces herself 
+         
+   *** Important ***
+         - 
 
  
