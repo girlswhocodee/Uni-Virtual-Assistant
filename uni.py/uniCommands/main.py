@@ -87,4 +87,24 @@ if __name__ =="__main__":
         #if who are you is found, Uni will introduce herself
         elif "who are you" in data:
             recognizeAudio("My name is Uni and I am your virtual assistant")
+        
+        #if how are you is found, Uni will tell me how she is and also ask me
+        elif 'how are you' in data:
+            recognizeAudio('I am fine, Thank you')
+            recognizeAudio('How are you Mariam?')
+
+        #if fine or good is found, she will say im glad
+        elif 'fine' in data or "good" in data:
+            recognizeAudio('I\'m glad to hear that')
+
+        #if birthday is found, she will tell me my birthday
+        elif 'my birthday' in data:
+            recognizeAudio('Your birthday is July 11th')
+ 
+        #if thank you is found, Uni will go on standy
+        elif 'thank you' in data:
+            recognizeAudio("I am glad that I could be of assistance!")
+            exit()
+
+        
  
