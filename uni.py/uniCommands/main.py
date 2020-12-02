@@ -42,7 +42,7 @@ if __name__ =="__main__":
 
         #if write is found in data, Uni will take notes
         elif "write" in data:
-            recognizeAudio('What should i write Mariam?')
+            recognizeAudio('What should i write?')
             note = takeCommand()
             file = open('uni.txt', 'w')
             recognizeAudio('Should i include the date and time')
@@ -91,15 +91,11 @@ if __name__ =="__main__":
         #if how are you is found, Uni will tell me how she is and also ask me
         elif 'how are you' in data:
             recognizeAudio('I am fine, Thank you')
-            recognizeAudio('How are you Mariam?')
+            recognizeAudio('How are you?')
 
         #if fine or good is found, she will say im glad
         elif 'fine' in data or "good" in data:
             recognizeAudio('I\'m glad to hear that')
-
-        #if birthday is found, she will tell me my birthday
-        elif 'my birthday' in data:
-            recognizeAudio('Your birthday is July 11th')
  
         #if thank you is found, Uni will go on standy
         elif 'thank you' or 'thanks' in data:
