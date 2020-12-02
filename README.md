@@ -21,7 +21,7 @@ In order to run this program succesfully on your computer, there are a few packa
          - pip3 install speechRecognition
          - pip3 install pyttsx3
          - pip3 install wikipedia 
-         - pip3 install 
+         - pip3 install pyjokes
          - pip3 install pyaudio or pipwin install pyaudio (Windows) - this may be needed in the case that you are receiving an error
          
     - After succesfully downloading the necessary libaries and packages, you are now ready to use Uni as your virtual assistant. 
