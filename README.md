@@ -49,7 +49,7 @@ In order to run this program succesfully on your computer, there are a few packa
          
       These functionalities can also be seen on the main.py file. 
       
-      7) When you are done asking for commands, you may exit out of the program. 
+      7) When you are done asking for commands, you may exit out of the program by saying "thank you" or "thanks"
          
    *** Important ***
          - Uni looks for specific words to execute certain commands. For example, if you want Uni to search wikipedia for "LeBron James" you would have to say "who          is LeBron James?"
