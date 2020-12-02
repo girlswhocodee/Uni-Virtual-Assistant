@@ -11,7 +11,11 @@ This program is compatible with Windows, Linux, and OS systems.
  
 In order to run this program succesfully on your computer, there are a few packages that need to be installed.
    - speechRecognition
-   - Pyttsx
+   - Pyttsx3 (Sapi5)
    - Pyjokes 
    - Wikipedia 
+   
+# Step-by-Step Instructions
+
+
  
