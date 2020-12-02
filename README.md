@@ -24,6 +24,36 @@ In order to run this program succesfully on your computer, there are a few packa
          - pip3 install 
          - pip3 install pyaudio or pipwin install pyaudio (Windows) - this may be needed in the case that you are receiving an error
          
-   2) After succesfully downloading the 
+    - After succesfully downloading the necessary libaries and packages, you are now ready to use Uni as your virtual assistant. 
+   
+   2) Open your IDE and clone the Uni-Virtual-Assistant code from Github or import from another location. 
+   
+   3) After the code has been imported you should see multiple .py files including commands.py, main.py, weather.py, and webbrowser.py. After everything has               imported successfully, you may now run the program.
+   
+   4) In order to run the program, there should be a green play button in your IDE that you should click.
+   
+   5) Uni will greet you and will ask you "how can I help you?"
+   
+   6) From here you may ask Uni to execute a command. The functionalities are as follows:
+         - Tells the current time 
+         - Tells the current date 
+         - Opens YouTube 
+         - Opens BlackBoard 
+         - Searches wikipedia for someone and gives a short summary 
+         - Searches google for a specific location
+         - Tells jokes 
+         - Takes notes 
+         - Introduces herself
+         - Tells the weather 
+         - Takes you to a specific website
+         
+      These functionalities can also be seen on the main.py file. 
+      
+      7) When you are done asking for commands, you may exit out of the program. 
+         
+   *** Important ***
+         - Uni looks for specific words to execute certain commands. For example, if you want Uni to search wikipedia for "LeBron James" you would have to say "who          is LeBron James?"
+         
+   Now that you have this program, you can use Uni to aid in your success! :)
 
  
