@@ -42,10 +42,10 @@ if __name__ =="__main__":
 
         #if write is found in data, Uni will take notes
         elif "write" in data:
-            recognizeAudio("What should i write Mariam?")
+            recognizeAudio('What should i write Mariam?')
             note = takeCommand()
             file = open('uni.txt', 'w')
-            recognizeAudio("Should i include the date and time")
+            recognizeAudio('Should i include the date and time')
             snfm = takeCommand()
             if 'yes' in snfm or 'sure' in snfm:
                 strTime = datetime.datetime.now().strftime("%I:%M")
@@ -56,18 +56,18 @@ if __name__ =="__main__":
                 file.write(note)
          
         #if show note is found in data, Uni will open up the text file 
-        elif "show note" in data:
-            recognizeAudio("Showing Notes")
-            file = open("uni.txt", "r") 
+        elif 'show note' in data:
+            recognizeAudio('Showing Notes')
+            file = open('uni.txt', 'r') 
             print(file.read())
-            recognizeAudio(file.read(10))
+            recognizeAudio(file.read())
 
         #if joke is found in data, Uni will tell jokes
         elif 'joke' in data:
             recognizeAudio(pyjokes.get_joke())
 
         #if where is is found in data, Uni will do a google search
-        elif "where is" in data:
+        elif 'where is' in data:
             data = data.replace('where is', '')
             location = data
             recognizeAudio('Let me look that up for you')
@@ -85,8 +85,8 @@ if __name__ =="__main__":
             webbrowser.open('https://blackboard.umbc.edu/')
 
         #if who are you is found, Uni will introduce herself
-        elif "who are you" in data:
-            recognizeAudio("My name is Uni and I am your virtual assistant")
+        elif 'who are you' in data:
+            recognizeAudio('My name is Uni and I am your virtual assistant')
         
         #if how are you is found, Uni will tell me how she is and also ask me
         elif 'how are you' in data:
@@ -102,7 +102,7 @@ if __name__ =="__main__":
             recognizeAudio('Your birthday is July 11th')
  
         #if thank you is found, Uni will go on standy
-        elif 'thank you' in data:
+        elif 'thank you' or 'thanks' in data:
             recognizeAudio("I am glad that I could be of assistance!")
             exit()
 
